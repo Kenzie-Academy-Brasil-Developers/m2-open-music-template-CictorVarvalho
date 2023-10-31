@@ -35,10 +35,6 @@
   --color-grey-1: #fdfeff;
 }
 
-body.dark-mode{
-  background-color: var(--color-grey-1);
-}
-
 body {
   font-family: "Inter", sans-serif;
   font-style: normal;
