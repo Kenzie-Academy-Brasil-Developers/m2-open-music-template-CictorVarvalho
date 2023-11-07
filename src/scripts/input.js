@@ -2,7 +2,7 @@
   Não altere a função abaixo!
 */
 
-function handleCustomInputRange() {
+export const handleCustomInputRange = () => {
   const inputRange = document.querySelector(".price__input-range");
 
   inputRange.addEventListener("input", function (event) {
@@ -12,5 +12,3 @@ function handleCustomInputRange() {
     inputRange.style.background = `linear-gradient(to right, var(--color-brand-1) ${runnableTrackProgress}%, var(--color-grey-5) ${runnableTrackProgress}%)`;
   });
 }
-
-handleCustomInputRange();

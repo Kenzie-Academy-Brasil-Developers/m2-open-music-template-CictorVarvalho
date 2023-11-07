@@ -1,25 +1,20 @@
 /* Desenvolva sua lógica aqui ... */
-function handleDarkMode() {
-    const darkModeButton = document.querySelector(".header__btn");
-    const html = document.querySelector("html");
-  
-    const darkMode = localStorage.getItem("@openMusic:theme");
-  
-    if (darkMode) {
-      html.classList.add("dark-mode");
-      darkModeButton.classList.toggle("header__btn--dark-mode");
-    }
-  
-    darkModeButton.addEventListener("click", (event) => {
-      html.classList.toggle("dark-mode");
-      darkModeButton.classList.toggle("header__btn--dark-mode");
-  
-      if (html.classList.contains("dark-mode")) {
-        localStorage.setItem("@openMusic:theme", "dark");
-      } else {
-        localStorage.removeItem("@openMusic:theme");
-      }
-    });
+export const theme = () => {
+  const btn__theme = document.querySelector(".header__btn");
+  const html = document.querySelector("html");
+
+  if(localStorage.getItem('@openMusic:theme')){
+      btn__theme.classList.toggle("header__btn--dark-mode");
+      html.classList.add('dark-mode');
   }
   
-  handleDarkMode();
+  btn__theme.addEventListener("click", (event)=>{
+      btn__theme.classList.toggle("header__btn--dark-mode");
+      html.classList.toggle("dark-mode");
+      if(html.classList.contains("dark-mode")) {
+          localStorage.setItem('@openMusic:theme', 'dark-mode')
+      } else {
+          localStorage.removeItem('@openMusic:theme', 'dark-mode')
+      }
+  })
+}
