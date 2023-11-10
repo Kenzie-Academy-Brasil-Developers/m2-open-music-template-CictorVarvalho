@@ -3,23 +3,21 @@ import { theme } from "./theme.js";
 import { handleCustomInputRange } from "./input.js";
 import { albumList, genresList } from "./productsData.js"
 
-const  renderGenreItems = (genres) => {
+const renderGenreItems = (genres) => {
   const ulGenreList = document.querySelector(".genres__list");
 
-  for (let i = 0; i < genres.length; i++) {
-    const currentGenre = genres[i];
-
+  genres.forEach((genre) => {
     const liGenre = document.createElement("li");
-    liGenre.innerText = currentGenre;
+    liGenre.innerText = genre;
     liGenre.classList.add("genre__item", "text3");
-    if (currentGenre === "Todos") {
+    if(genre === "Todos"){
       liGenre.classList.add("active");
     }
     ulGenreList.appendChild(liGenre);
-  }
+  })
 }
 
-const  createAlbumCard = (albumData) => {
+const createAlbumCard = (albumData) => {
   // CRIANDO OS ELEMENTOS
   const card = document.createElement("li");
 
@@ -35,7 +33,7 @@ const  createAlbumCard = (albumData) => {
   const albumBuyButton = document.createElement("button");
 
   // CARD
-  card.classList.add("album__item");
+  card.classList.add("album__item", "slide");
 
   // COVER IMG
   albumCoverContainer.classList.add("album__cover-container");
@@ -82,34 +80,18 @@ const renderAlbumCards = (albums) => {
   const ulAlbumList = document.querySelector(".albums__list");
   ulAlbumList.innerHTML = "";
 
-  for (let i = 0; i < albums.length; i++) {
-    const currentAlbum = albums[i];
-    const albumCard = createAlbumCard(currentAlbum);
+  albums.forEach((album) => {
+    const albumCard = createAlbumCard(album);
     ulAlbumList.appendChild(albumCard);
-  }
+  });
 }
 
 const handleFilter = (albums, genreFilter = "Todos", priceFilter) => {
-  const filteredAlbums = [];
-
-  for (let i = 0; i < albums.length; i++) {
-    const currentAlbum = albums[i];
-    if (
-      (currentAlbum.genre === genreFilter || genreFilter === "Todos") &&
-      currentAlbum.price <= priceFilter
-    ) {
-      filteredAlbums.push(currentAlbum);
-    }
-  }
-
-  return filteredAlbums;
+  return albums.filter((album) =>(album.genre === genreFilter || genreFilter === "Todos") && (album.price <= priceFilter));
 }
 
 const removeActiveClass = (genres) => {
-  for (let i = 0; i < genres.length; i++) {
-    const genre = genres[i];
-    genre.classList.remove("active");
-  }
+  genres.forEach((genre)=> genre.classList.remove("active"))
 }
 
 const handleFilterEvents = (albums) => {
@@ -120,19 +102,18 @@ const handleFilterEvents = (albums) => {
   let genreCategory = "Todos";
   let priceValue = inputPriceRange.valueAsNumber;
 
-  for (let i = 0; i < genres.length; i++) {
-    const currentGenre = genres[i];
-    currentGenre.addEventListener("click", function (event) {
+  genres.forEach((genre) => {
+    genre.addEventListener("click", (event) => {
       removeActiveClass(genres);
-      currentGenre.classList.add("active");
+      genre.classList.add("active");
       genreCategory = event.target.innerText;
 
       const albumsToRender = handleFilter(albums, genreCategory, priceValue);
       renderAlbumCards(albumsToRender);
     });
-  }
+  })
 
-  inputPriceRange.addEventListener("input", function (event) {
+  inputPriceRange.addEventListener("input", (event) => {
     priceValue = event.target.value;
     spanPriceValue.innerText = "R$ " + priceValue;
     const albumsToRender = handleFilter(albums, genreCategory, priceValue);
